@@ -30,7 +30,7 @@ public class SendSMS extends ReactContextBaseJavaModule {
         return "SendSMS";
     }
 
-    private void sendCallback(Integer messageId, String message){
+    private void sendCallback(String messageId, String message){
         if (callback != null) {
             callback.invoke(messageId, message);
             callback = null;
@@ -39,7 +39,7 @@ public class SendSMS extends ReactContextBaseJavaModule {
 
     //---sends an SMS message to another device---
     @ReactMethod
-    public void send(final Integer messageId, String phoneNumber, String message, final Callback cb ){
+    public void send(final String messageId, String phoneNumber, String message, final Callback cb ){
 
         try{
 
@@ -60,19 +60,19 @@ public class SendSMS extends ReactContextBaseJavaModule {
                     switch (getResultCode())
                     {
                         case Activity.RESULT_OK:
-                            sendCallback(messageId, "SMS sent");
+                            sendCallback(messageId, "smsSent");
                             break;
                         case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-                            sendCallback(messageId, "Generic failure");
+                            sendCallback(messageId, "genericFailure");
                             break;
                         case SmsManager.RESULT_ERROR_NO_SERVICE:
-                            sendCallback(messageId, "No service");
+                            sendCallback(messageId, "noService");
                             break;
                         case SmsManager.RESULT_ERROR_NULL_PDU:
-                            sendCallback(messageId, "Null PDU");
+                            sendCallback(messageId, "nullPdu");
                             break;
                         case SmsManager.RESULT_ERROR_RADIO_OFF:
-                            sendCallback(messageId, "Radio off");
+                            sendCallback(messageId, "radioOff");
                             break;
                     }
                 }
